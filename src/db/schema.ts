@@ -24,6 +24,7 @@ export const users = pgTable("users", {
     .$onUpdate(() => new Date()),
 });
 
+
 export const decks = pgTable("decks", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
