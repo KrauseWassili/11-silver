@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tabletops",
-  description: "Everything about games",
+  title: "Super-tutor",
+  description: "Learn smarter, achieve faster!",
 };
 
 export default function RootLayout({
