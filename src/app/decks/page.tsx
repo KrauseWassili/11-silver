@@ -55,7 +55,7 @@ export default function DecksPage() {
       <div className="p-20 text-2xl flex flex-col items-start space-y-10">
         <button
           type="button"
-          onClick={() => (window.location.href = "/decks/create-deck")}
+          onClick={() => (window.location.href = "/decks/new")}
           className="px-8 py-4 bg-sky-700/55 text-white text-xl font-semibold rounded-lg shadow-lg hover:bg-blue-500 transition"
         >
           Create
