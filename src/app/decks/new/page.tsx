@@ -19,7 +19,7 @@ export default function NewDeckPage() {
 
     try {
       schema.parse({ title });
-      router.push("/cards/new");
+      router.push("/cards/create_new");
     } catch (err) {
       if (err instanceof ZodError) {
         const first = err.issues[0];
