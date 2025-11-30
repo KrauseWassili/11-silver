@@ -48,3 +48,23 @@ button:hover {
   --font-mono: var(--font-geist-mono);
 }
 
+header {
+  background-color: var(--color-dark);
+  color: var(--color-lightest);
+  border-bottom: 1px solid var(--color-mid-dark);
+  padding: 1rem 2rem;
+}
+
+footer {
+  background-color: var(--color-dark);
+  color: var(--color-lightest);
+  border-top: 1px solid var(--color-mid-dark);
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+  opacity: 0.85;
+}
+

@@ -30,6 +30,12 @@ export default function Header() {
             >
               Decks
             </Link>
+            <Link
+              href="/profile"
+              className="text-secondary text-xl hover:text-foreground transition-colors font-medium"
+            >
+              Profile
+            </Link>
           </div>
 
           {/* === Аватарка и кнопка входа справа === */}
