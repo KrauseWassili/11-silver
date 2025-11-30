@@ -28,18 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <Providers>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider>
             <Header />
-            <main className="min-h-[70vh] flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </ThemeProvider>
         </Providers>
