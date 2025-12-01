@@ -21,11 +21,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Super-tutor",
     description: "Learn smarter, achieve faster!",
-    url: "https://yourdomain.com",
+    url: "https://11-silver.vercel.app",
     siteName: "Super-tutor",
     images: [
       {
-        url: "https://yourdomain.com/social-preview.png",
+        url: "https://11-silver.vercel.app/social-preview.png",
         width: 1200,
         height: 630,
         alt: "Super-tutor preview",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Super-tutor",
     description: "Learn smarter, achieve faster!",
-    images: ["https://yourdomain.com/social-preview.png"],
+    images: ["https://11-silver.vercel.app/social-preview.png"],
   },
 };
 
