@@ -2,17 +2,17 @@
 
 import { useRouter } from "next/navigation";
 
-interface ActionButtonProps {
+interface CreateButtonProps {
   href: string;
   label: string;
   color?: string;
 }
 
-export default function ActionButton({
+export default function CreateButton({
   href,
   label,
   color = "bg-sky-700/55 hover:bg-blue-500",
-}: ActionButtonProps) {
+}: CreateButtonProps) {
   const router = useRouter();
 
   return (

@@ -1,15 +1,15 @@
 import DeckCard from "@/components/deck-card";
-import ActionButton from "@/components/action-button";
 import { db } from "@/db";
 import { decks, flashcards } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
+import CreateButton from "@/components/create-button";
 
 export default async function DecksPage() {
   const deckWithCountRaw = await db
     .select({
       id: decks.id,
       title: decks.title,
-      cardCount: count(flashcards.id),
+      cardCount: count(flashcards.id).as("cardCount"),
     })
     .from(decks)
     .leftJoin(flashcards, eq(flashcards.deckId, decks.id))
@@ -39,7 +39,7 @@ export default async function DecksPage() {
       </div>
 
       <div className="p-24 text-2xl flex flex-col items-start space-y-10">
-        <ActionButton href="/decks/new" label="Create" />
+        <CreateButton href="/decks/new" label="Create" />
       </div>
     </div>
   );
