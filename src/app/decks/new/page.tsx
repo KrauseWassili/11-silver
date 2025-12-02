@@ -1,56 +1,39 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { z, ZodError } from "zod";
+import { useFormState } from "react-dom";
+import { createDeck } from "../actions/create-deck";
 
-const schema = z.object({
-  title: z.string().min(2, "Minimum 2 symbols").nonempty("Title is requeired"),
-});
+const initialState = {
+  errors: null,
+};
 
 export default function NewDeckPage() {
-  const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-
-    try {
-      schema.parse({ title });
-      router.push("/cards/create_new");
-    } catch (err) {
-      if (err instanceof ZodError) {
-        const first = err.issues[0];
-        setError(first ? first.message : "Invalid input");
-      } else {
-        setError("An unexpected error occurred");
-      }
-    }
-  };
+  const [state, formAction] = useFormState(createDeck, initialState);
 
   return (
-    <div>
-      <h1>Enter title for new deck</h1>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <form action={formAction} className="flex flex-col gap-4 max-w-sm w-full">
+      <div className="flex flex-col">
+      <h1 className="text-2xl font-medium">Enter title for new deck</h1>
+      <label htmlFor="title" className="flex justify-start">Title</label>
 
-      <form onSubmit={handleSubmit} noValidate>
-        <label>
-          Title
-          <input
-            type="text"
-            placeholder="New title"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-              if (error) setError(null);
-            }}
-          />
-        </label>
+      <input
+      id="title"
+      name="title"
+      type="text"
+      placeholder="New title"
+      className="border p-2"
+      required
+      />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {state?.errors?.title && (
+      <p className="text-red-500 text-sm">{state.errors.title[0]}</p>
+      )}
+      </div>
 
-        <button type="submit">Create</button>
+      <button type="submit" className="border p-2 bg-gray-100">
+      Create
+      </button>
       </form>
     </div>
   );
