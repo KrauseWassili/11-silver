@@ -2,13 +2,14 @@
 
 import { useFormState } from "react-dom";
 import { createDeck } from "../actions/create-deck";
+import { useActionState } from "react";
 
 const initialState = {
   errors: null,
 };
 
 export default function NewDeckPage() {
-  const [state, formAction] = useFormState(createDeck, initialState);
+  const [state, formAction] = useActionState(createDeck, initialState);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
