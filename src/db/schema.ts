@@ -27,7 +27,6 @@ export const users = pgTable("users", {
 export const decks = pgTable("decks", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  cardsCount: integer("cards_count").notNull().default(0),
   userId: integer("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
