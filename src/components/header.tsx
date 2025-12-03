@@ -11,12 +11,12 @@ export default function Header() {
     <div>
       <nav className="bg-accent p-4">
         <div className="flex items-center justify-between w-full">
-          {/* === Название слева === */}
           <Link href="/" className="flex items-center">
-            <h1 className="text-3xl font-bold text-foreground">Super ‑ tutor</h1>
+            <h1 className="text-3xl font-bold text-foreground">
+              Super ‑ tutor
+            </h1>
           </Link>
 
-          {/* === Навигация по центру === */}
           <div className="flex items-center space-x-8">
             <Link
               href="/"
@@ -32,7 +32,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* === Аватарка и кнопка входа справа === */}
           <div className="flex items-center space-x-4">
             {status === "authenticated" && session?.user?.image && (
               <Link href="/profile" className="flex items-center">
