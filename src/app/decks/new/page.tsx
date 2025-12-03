@@ -15,8 +15,7 @@ export default function NewDeckPage() {
       <form action={formAction} className="flex flex-col gap-4 max-w-sm w-full">
       <div className="flex flex-col">
       <h1 className="text-2xl font-medium">Enter title for new deck</h1>
-      <label htmlFor="title" className="flex justify-start">Title</label>
-
+      
       <input
       id="title"
       name="title"
