@@ -1,5 +1,5 @@
 
-import { FlashcardSlider } from "@/components/UI/FlashcardSlider";
+import { FlashcardSlider } from "@/components/UI/FlashcardSlider/flashcard-slider";
 import { db } from "@/db";
 import { decks, flashcards } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -25,7 +25,7 @@ export default async function DeckPage({
   if (deckResult.length === 0) {
     return (
       <p className="mt-10 text-center">
-        Колода не найдена
+        Deck not found.
       </p>
     );
   }
