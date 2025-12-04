@@ -11,7 +11,7 @@ interface CreateButtonProps {
 export default function CreateButton({
   href,
   label,
-  color = "bg-sky-700/55 hover:bg-blue-500",
+  
 }: CreateButtonProps) {
   const router = useRouter();
 
@@ -19,7 +19,7 @@ export default function CreateButton({
     <button
       type="button"
       onClick={() => router.push(href)}
-      className={`px-8 py-4 ${color} text-white text-xl font-semibold rounded-lg shadow-lg transition`}
+      className={`text-white text-2xl font-semibold rounded-lg shadow-lg transition`}
     >
       {label}
     </button>

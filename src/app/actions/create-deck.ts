@@ -35,7 +35,7 @@ export async function createDeck(
     // This should not happen as the form is only accessible to authenticated users
     redirect("/api/auth/signin");
   }
-  /*
+  
   if (session && session.user?.id) {
     const [newDeck] = await db
       .insert(decks)
@@ -46,6 +46,6 @@ export async function createDeck(
       .returning();
 
     redirect(`/decks/${newDeck.id}/edit`);
-  }*/
+  }
   return {errors:null};
 }
