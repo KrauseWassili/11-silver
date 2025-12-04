@@ -4,7 +4,8 @@ import { z } from "zod";
 import { db } from "@/db";
 import { decks } from "@/db/schema";
 import { redirect } from "next/navigation";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/auth-options";
 
 type ActionState = {
   errors?: {
@@ -29,14 +30,22 @@ export async function createDeck(
   }
 
   const { title } = parsed.data;
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // This should not happen as the form is only accessible to authenticated users
+    redirect("/api/auth/signin");
+  }
+  /*
+  if (session && session.user?.id) {
+    const [newDeck] = await db
+      .insert(decks)
+      .values({
+        title,
+        userId: session.user.id,
+      })
+      .returning();
 
-  const [newDeck] = await db
-    .insert(decks)
-    .values({
-      title,
-      userId: 1,
-    })
-    .returning();
-
-  redirect(`/decks/${newDeck.id}/edit`);
+    redirect(`/decks/${newDeck.id}/edit`);
+  }*/
+  return {errors:null};
 }

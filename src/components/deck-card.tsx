@@ -26,13 +26,13 @@ export default function DeckCard({
       </div>
 
       <div className="flex items-center space-x-7">
-        <button
+        {/* <button
           type="button"
           onClick={() => router.push(`/decks/${deck.id}/edit`)}
           aria-label="Edit deck"
         >
           ✏️
-        </button>
+        </button> */}
         <button
           type="button"
           onClick={() => router.push(`/decks/${deck.id}/delete`)}

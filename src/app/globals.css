@@ -38,11 +38,18 @@ button:hover {
 
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-border: var(--border);
-  --color-secondary: var(--secondary);
+  --color-darkest: var(--color-darkest);
+  --color-dark: var(--color-dark);
+  --color-mid-dark: var(--color-mid-dark);
+  --color-mid: var(--color-mid);
+  --color-light: var(--color-light);
+  --color-lightest: var(--color-lightest);
+  --color-bg: var(--color-bg);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

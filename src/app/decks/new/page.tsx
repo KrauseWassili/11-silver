@@ -1,7 +1,6 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { createDeck } from "../actions/create-deck";
+import { createDeck } from "../../actions/create-deck";
 import { useActionState } from "react";
 
 const initialState = {
@@ -14,10 +13,9 @@ export default function NewDeckPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <form action={formAction} className="flex flex-col gap-4 max-w-sm w-full">
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-medium">Enter title for new deck</h1>
-      <label htmlFor="title" className="flex justify-start">Title</label>
-
+      
       <input
       id="title"
       name="title"
