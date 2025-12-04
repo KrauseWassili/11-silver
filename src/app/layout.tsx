@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Providers } from "./providers/providers";
 
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tabletops",
-  description: "Everything about games",
+  title: "Super-tutor",
+  description: "Learn smarter, achieve faster!",
 };
 
 export default function RootLayout({
@@ -27,18 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <Providers>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider>
             <Header />
-            {children}
+            <main className="flex-1">{children}</main>
+            <Footer />
           </ThemeProvider>
         </Providers>
       </body>
