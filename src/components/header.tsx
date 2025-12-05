@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <div>
-      <nav className="bg-accent p-4">
+      <nav className="bg-mid p-4">
         <div className="flex items-center justify-between w-full">
           <Link href="/" className="flex items-center">
             <h1 className="text-3xl font-bold text-foreground">
