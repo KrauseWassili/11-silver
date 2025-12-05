@@ -8,16 +8,11 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header className="relative w-full
-        bg-dark
-        text-lightest
-        py-2 
-        text-center
-      ">
-      <nav className="relative w-full">
-        <div className="flex items-center justify-between w-full px-4">
+    <div>
+      <nav className="bg-accent p-4">
+        <div className="flex items-center justify-between w-full">
           <Link href="/" className="flex items-center">
-            <h1 className="text-xl font-bold text-foreground">
+            <h1 className="text-3xl font-bold text-foreground">
               Super ‑ tutor
             </h1>
           </Link>
@@ -43,8 +38,8 @@ export default function Header() {
                 <img
                   src={session.user.image}
                   alt={session.user.name || "avatar"}
-                  width={30}
-                  height={30}
+                  width={40}
+                  height={40}
                   className="rounded-full border border-foreground/20 hover:border-foreground transition"
                 />
               </Link>
@@ -53,6 +48,6 @@ export default function Header() {
           </div>
         </div>
       </nav>
-    </header>
+    </div>
   );
 }
