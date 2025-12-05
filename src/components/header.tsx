@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import GoogleSignIn from "./google-sign-in";
-import Image from "next/image";
 
 export default function Header() {
   const { data: session, status } = useSession();
