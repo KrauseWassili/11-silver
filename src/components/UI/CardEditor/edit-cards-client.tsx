@@ -7,6 +7,7 @@ import saveCard from "@/app/actions/save-card";
 import updateDeck from "@/app/actions/update-deck";
 import deleteCard from "@/app/actions/delete-card";
 import ConfirmDialog from "../../confirm-dialog";
+import { useRouter } from "next/navigation";
 import router from "next/router";
 
 export type Flashcard = {
@@ -29,16 +30,13 @@ export default function EditCardsClient({
 }: Props) {
   const [cards, setCards] = useState<Flashcard[]>(initialCards);
 
-  // новая карточка (нижняя строка)
   const [newFront, setNewFront] = useState("");
   const [newBack, setNewBack] = useState("");
 
-  // редактирование строки
   const [editingCardId, setEditingCardId] = useState<number | null>(null);
   const [editingFront, setEditingFront] = useState("");
   const [editingBack, setEditingBack] = useState("");
 
-  // карточка для удаления (модалка)
   const [cardToDelete, setCardToDelete] = useState<Flashcard | null>(null);
 
   const startEditCard = (card: Flashcard) => {
@@ -91,17 +89,16 @@ export default function EditCardsClient({
     setCardToDelete(null);
   };
 
-  const handleSaveDeck = async () => {
+  const handleUpdateDeck = async () => {
     await updateDeck({ id: deckId, title: deckTitle });
     alert("Deck saved");
   };
 
-  const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold text-gray-700 mb-10">
-        Edit Cards – {deckTitle}
+      <h1 className="text-3xl font-bold text-gray-700 mb-10 text-center">
+        {deckTitle}
       </h1>
 
       <div className="bg-white shadow-lg rounded-lg p-10 max-w-4xl mx-auto">
@@ -172,17 +169,18 @@ export default function EditCardsClient({
 
           <button
             onClick={handleAddCard}
-            className="px-6 py-3 bg-blue-600 text-white text-2xl rounded-lg shadow hover:bg-blue-500"
+            className="text-2xl bg-mid  px-5 py-2.5 rounded-md"
           >
             💾
           </button>
         </div>
 
         <button
-          onClick={handleSaveDeck}
-          className="mt-12 px-10 py-4 bg-sky-700/55 text-white text-xl font-semibold rounded-lg shadow hover:bg-blue-500"
+          type="button"
+          onClick={() => router.push(`/decks`)}
+          className="flex justify-end mt-12 px-10 py-4 text-lightest text-xl font-semibold rounded-lg shadow bg-mid-dark hover:bg-mid"
         >
-          Save deck
+          OK
         </button>
       </div>
 

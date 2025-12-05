@@ -58,14 +58,14 @@ export default function CardRow({
       <td className="border p-3 text-center">
         {isEditing ? (
           <button
-            className="text-green-600 hover:text-green-800 text-2xl"
+            className="text-2xl bg-mid  px-3 py-1 rounded-md"
             onClick={onSaveEdit}
           >
             ✔
           </button>
         ) : (
           <button
-            className="hover:text-blue-600 text-2xl"
+            className="text-2xl bg-mid  px-3 py-1 rounded-md"
             onClick={onStartEdit}
           >
             ✏️
@@ -75,7 +75,7 @@ export default function CardRow({
 
       <td className="border p-3 text-center">
         <button
-          className="text-red-600 hover:text-red-800 text-2xl"
+          className="text-2xl bg-mid  px-3 py-1 rounded-md"
           onClick={onAskDelete}
         >
           ✖
