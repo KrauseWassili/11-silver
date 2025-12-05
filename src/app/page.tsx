@@ -1,4 +1,5 @@
 import Buttons from "@/components/buttons-home-page";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -7,7 +8,7 @@ export default function Home() {
         <h2 className="text-4xl bold mb-4">
           Learn Languages with Super Tutor
         </h2>
-        <img
+        <Image
           src="/Wyqhh8CwGO.svg"
           alt=""
           width={300}
