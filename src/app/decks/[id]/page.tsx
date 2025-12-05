@@ -57,9 +57,9 @@ export default async function DeckPage({
         <button
           type="button"
         >
-          {/* <Link href={`/decks/${numericId}/edit`} 
+          <Link href={`/decks/${numericId}/edit`} 
           className="mt-4 px-6 py-2"
-          >Edit Deck</Link> */}
+          >Edit Deck</Link>
         </button>
       </main>
     </div>

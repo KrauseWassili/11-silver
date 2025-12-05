@@ -1,4 +1,6 @@
-import EditCardsClient, { Flashcard } from "@/components/edit-cards-client";
+import EditCardsClient, {
+  Flashcard,
+} from "@/components/UI/CardEditor/edit-cards-client";
 import { db } from "@/db";
 import { decks, flashcards } from "@/db/schema";
 import { eq } from "drizzle-orm";

@@ -6,6 +6,8 @@ import updateCard from "@/app/actions/update-card";
 import saveCard from "@/app/actions/save-card";
 import updateDeck from "@/app/actions/update-deck";
 import deleteCard from "@/app/actions/delete-card";
+import ConfirmDialog from "../../confirm-dialog";
+import router from "next/router";
 
 export type Flashcard = {
   id: number;
@@ -56,9 +58,7 @@ export default function EditCardsClient({
       backText: editingBack.trim(),
     });
 
-    setCards((prev) =>
-      prev.map((c) => (c.id === updated.id ? updated : c))
-    );
+    setCards((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
 
     setEditingCardId(null);
     setEditingFront("");
@@ -95,6 +95,8 @@ export default function EditCardsClient({
     await updateDeck({ id: deckId, title: deckTitle });
     alert("Deck saved");
   };
+
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="p-10">
@@ -145,7 +147,6 @@ export default function EditCardsClient({
           </tbody>
         </table>
 
-        
         <div className="mt-10 flex items-end space-x-6 text-xl">
           <div className="flex flex-col flex-1">
             <label className="mb-1 text-gray-600">Front text</label>
@@ -185,32 +186,15 @@ export default function EditCardsClient({
         </button>
       </div>
 
-      
       {cardToDelete && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-          <div className="bg-white p-10 rounded shadow-lg text-center text-xl">
-            <p>If press "delete card"</p>
-            <p className="mt-2 mb-6">Are you sure?</p>
-
-            <div className="flex justify-center space-x-8">
-              <button
-                onClick={handleDeleteCard}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => setCardToDelete(null)}
-                className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmDialog
+          message="Are you sure you want to delete this card?"
+          onConfirm={async () => {
+            handleDeleteCard();
+          }}
+          onCancel={() => setCardToDelete(null)}
+        />
       )}
     </div>
   );
 }
-
-
