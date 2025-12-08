@@ -23,18 +23,15 @@ export default async function DecksPage() {
   }));
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-[var(--color-bg)] text-[var(--color-text)]">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[var(--color-darkest)]">
+    <div className="min-h-screen px-4 py-8 ">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 ">
         Select a deck and tap it to begin training
       </h2>
 
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-3">
           {deckWithCount.map((deck) => (
-            <div
-              key={deck.id}
-              // className="md:p-2" /* отступ вокруг карточки, чтобы был gap визуально */
-            >
+            <div key={deck.id}>
               <DeckCard
                 deck={{ id: deck.id, name: deck.title }}
                 count={deck.cardCount}
@@ -44,7 +41,7 @@ export default async function DecksPage() {
         </div>
 
         <div className="mt-8 flex justify-end">
-          <div className="shadow-lg rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] transition">
+          <div className="shadow-lg rounded-lg">
             <CreateButton href="/decks/new" label="Create" />
           </div>
         </div>
