@@ -41,7 +41,7 @@ export default async function DecksPage() {
         </div>
 
         <div className="mt-8 flex justify-end">
-          <div className="shadow-lg rounded-lg">
+          <div className="shadow-lg rounded-lg ">
             <CreateButton href="/decks/new" label="Create" />
           </div>
         </div>
