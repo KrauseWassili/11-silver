@@ -17,7 +17,7 @@ export default function Header() {
         text-center
       "
     >
-      <nav className="relative w-full">
+      <nav>
         <div className="flex items-center justify-between w-full px-4">
           <Link href="/" className="flex items-center">
             <h1 className="text-xl font-bold text-foreground">Super ‑ tutor</h1>
@@ -42,8 +42,8 @@ export default function Header() {
             {status === "authenticated" && (
               <Avatar
                 image={session?.user?.image}
-                name={session?.user?.name}     
-                href="/profile"           
+                name={session?.user?.name}
+                href="/profile"
               />
             )}
             <GoogleSignIn />
