@@ -38,7 +38,7 @@ export default function DecksClient({
   }
 
   return (
-    <div className="mt-4 mb-24 min-h-screen px-4 py-8">
+    <div className="mb-24 min-h-screen px-4 py-8 mt-12">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
         Select a deck and tap it to begin training
       </h2>

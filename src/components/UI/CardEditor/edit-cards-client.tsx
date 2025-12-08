@@ -96,7 +96,7 @@ export default function EditCardsClient({
 
   const router = useRouter();
   return (
-    <div className="p-10">
+    <div className="p-10 mt-12">
       <h1 className="text-3xl font-bold text-gray-700 mb-10 text-center">
         {deckTitle}
       </h1>
