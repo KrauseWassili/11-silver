@@ -19,12 +19,14 @@ type Props = {
   deckId: number;
   deckTitle: string;
   initialCards: Flashcard[];
+  source?: string;
 };
 
 export default function EditCardsClient({
   deckId,
   deckTitle,
   initialCards,
+  source
 }: Props) {
   const [cards, setCards] = useState<Flashcard[]>(initialCards);
 
@@ -95,6 +97,7 @@ export default function EditCardsClient({
   };
 
   const router = useRouter();
+  const backUrl = source || "/decks";
   return (
     <div className="p-10 mt-12">
       <h1 className="text-3xl font-bold text-gray-700 mb-10 text-center">
@@ -212,7 +215,7 @@ export default function EditCardsClient({
 
         <button
           type="button"
-          onClick={() => router.push(`/decks`)}
+          onClick={() => router.push(backUrl)}
           className="flex justify-end mt-12 px-10 py-4 text-lightest text-xl font-semibold rounded-lg shadow bg-mid-dark hover:bg-mid"
         >
           OK
