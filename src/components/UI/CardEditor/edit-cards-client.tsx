@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import CardRow from "./card-row";
 import updateCard from "@/app/actions/update-card";
 import saveCard from "@/app/actions/save-card";
-import updateDeck from "@/app/actions/update-deck";
 import deleteCard from "@/app/actions/delete-card";
 import ConfirmDialog from "../../confirm-dialog";
 import { useRouter } from "next/navigation";
-import router from "next/router";
 
 export type Flashcard = {
   id: number;
@@ -39,6 +37,20 @@ export default function EditCardsClient({
 
   const [cardToDelete, setCardToDelete] = useState<Flashcard | null>(null);
 
+  const [state, formAction, isPending] = useActionState(saveCard, {
+    errors: {},
+  });
+
+  const [editErrors, setEditErrors] = useState<Record<string, string[]>>({});
+
+  useEffect(() => {
+    if (state && !state.errors && state.id) {
+      setCards((prev) => [...prev, state]);
+      setNewFront("");
+      setNewBack("");
+    }
+  }, [state]);
+
   const startEditCard = (card: Flashcard) => {
     setEditingCardId(card.id);
     setEditingFront(card.frontText);
@@ -47,34 +59,27 @@ export default function EditCardsClient({
 
   const handleSaveEditedCard = async () => {
     if (editingCardId === null) return;
-    if (!editingFront.trim() || !editingBack.trim()) return;
 
-    const updated = await updateCard({
+    const result = await updateCard({
       id: editingCardId,
       deckId,
-      frontText: editingFront.trim(),
-      backText: editingBack.trim(),
+      frontText: editingFront,
+      backText: editingBack,
     });
 
-    setCards((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+    if (result.errors) {
+      setEditErrors(result.errors);
+      return;
+    }
+
+    setCards((prev) =>
+      prev.map((c) => (c.id === result.updated.id ? result.updated : c))
+    );
 
     setEditingCardId(null);
     setEditingFront("");
     setEditingBack("");
-  };
-
-  const handleAddCard = async () => {
-    if (!newFront.trim() || !newBack.trim()) return;
-
-    const created = await saveCard({
-      deckId,
-      frontText: newFront.trim(),
-      backText: newBack.trim(),
-    });
-
-    setCards((prev) => [...prev, created]);
-    setNewFront("");
-    setNewBack("");
+    setEditErrors({});
   };
 
   const handleDeleteCard = async () => {
@@ -89,14 +94,9 @@ export default function EditCardsClient({
     setCardToDelete(null);
   };
 
-  const handleUpdateDeck = async () => {
-    await updateDeck({ id: deckId, title: deckTitle });
-    alert("Deck saved");
-  };
-
   const router = useRouter();
   return (
-    <div className="p-10">
+    <div className="p-10 mt-12">
       <h1 className="text-3xl font-bold text-gray-700 mb-10 text-center">
         {deckTitle}
       </h1>
@@ -125,6 +125,7 @@ export default function EditCardsClient({
                   isEditing={isEditing}
                   editingFront={editingFront}
                   editingBack={editingBack}
+                  editErrors={editErrors}
                   onStartEdit={() => startEditCard(card)}
                   onChangeFront={setEditingFront}
                   onChangeBack={setEditingBack}
@@ -144,36 +145,70 @@ export default function EditCardsClient({
           </tbody>
         </table>
 
-        <div className="mt-10 flex items-end space-x-6 text-xl">
+        <form
+          action={formAction}
+          className="mt-10 flex items-center space-x-6 text-xl"
+        >
+          <input type="hidden" name="deckId" value={deckId} />
+
           <div className="flex flex-col flex-1">
             <label className="mb-1 text-gray-600">Front text</label>
             <input
               type="text"
+              name="frontText"
               value={newFront}
               onChange={(e) => setNewFront(e.target.value)}
               className="border p-3 rounded text-xl"
               placeholder="Enter text"
+              autoComplete="off"
             />
+            <div className="min-h-[1.25rem] mt-1">
+              {state?.errors?.frontText ? (
+                <p className="text-red-500 text-sm">
+                  {state.errors.frontText[0]}
+                </p>
+              ) : (
+                <p className="text-sm invisible select-none">placeholder</p>
+              )}
+            </div>
           </div>
 
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col flex-1 justify-center">
             <label className="mb-1 text-gray-600">Back text</label>
             <input
               type="text"
+              name="backText"
               value={newBack}
               onChange={(e) => setNewBack(e.target.value)}
               className="border p-3 rounded text-xl"
               placeholder="Enter text"
+              autoComplete="off"
             />
+            <div className="min-h-[1.25rem] mt-1">
+              {state?.errors?.backText ? (
+                <p className="text-red-500 text-sm">
+                  {state.errors.backText[0]}
+                </p>
+              ) : (
+                <p className="text-sm invisible select-none">placeholder</p>
+              )}
+            </div>
           </div>
 
-          <button
-            onClick={handleAddCard}
-            className="text-2xl bg-mid  px-5 py-2.5 rounded-md"
-          >
-            💾
-          </button>
-        </div>
+          <div className="flex flex-col justify-center">
+            <label className="mb-1 invisible">ph</label>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="text-2xl bg-mid rounded-md"
+            >
+              💾
+            </button>
+            <div className="min-h-[1.25rem] mt-1">
+              <p className="text-sm invisible select-none">ph</p>
+            </div>
+          </div>
+        </form>
 
         <button
           type="button"
