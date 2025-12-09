@@ -61,7 +61,7 @@ export default async function DeckPage({ params }: { params: { id: string } }) {
         <FlashcardSlider cards={cards} />
         {canManage && (
           <Link
-            href={`/decks/${numericId}/edit`}
+            href={`/decks/${numericId}/edit?source=/decks/${numericId}`}
             className="mt-4 px-6 py-2 rounded-md bg-mid-dark text-white hover:bg-dark transition"
           >
             Edit Deck
