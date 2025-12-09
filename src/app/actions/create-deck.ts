@@ -57,7 +57,7 @@ export async function createDeck(
       })
       .returning();
 
-    redirect(`/decks/${newDeck.id}/edit?source=/decks/new`);
+    redirect(`/decks/${newDeck.id}/edit?source=/decks`);
   }
   return { errors: null };
 }
