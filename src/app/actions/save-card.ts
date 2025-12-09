@@ -12,23 +12,16 @@ type ActionState = {
 };
 
 const CardInsertSchema = z.object({
-  frontText: z
-    .string()
-    .trim()
-    .min(1, "Min length must be more than 1")
-    .max(250, "Name is too long, must be under 250"),
-  backText: z
-    .string()
-    .trim()
-    .min(1, "Min length must be more than 1")
-    .max(250, "Name is too long, must be under 250"),
+  frontText: z.string().trim().min(1, "Front text is required").max(250),
+  backText: z.string().trim().min(1, "Back text is required").max(250),
 });
 
 export type EventFormState = {
   errors?: Record<string, string[]>;
 };
 
-export default async function saveCard(prevState: ActionState,
+export default async function saveCard(
+  prevState: ActionState,
   formData: FormData
 ): Promise<EventFormState | any> {
   const deckId = Number(formData.get("deckId"));
