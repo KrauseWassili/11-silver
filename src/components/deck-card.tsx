@@ -51,7 +51,7 @@ export default function DeckCard({
         <div className="flex items-center space-x-3 mt-2 md:mt-0">
           <button
             type="button"
-            onClick={() => router.push(`/decks/${deck.id}/edit`)}
+            onClick={() => router.push(`/decks/${deck.id}/edit?source=/decks`)}
             aria-label={`Edit ${deck.name}`}
             className="p-2 md:p-1 rounded focus:outline-none focus-visible:ring-2"
           >
