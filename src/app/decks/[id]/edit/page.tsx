@@ -6,11 +6,16 @@ import { decks, flashcards } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ source?: string }>;
 };
 
-export default async function EditDeckPage({ params }: PageProps) {
+export default async function EditDeckPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { id } = await params;
+  const { source } = await searchParams;
   const deckId = Number(id);
 
   const deckRows = await db.select().from(decks).where(eq(decks.id, deckId));
@@ -26,6 +31,7 @@ export default async function EditDeckPage({ params }: PageProps) {
       deckId={deckId}
       deckTitle={deck?.title ?? `Deck ${deckId}`}
       initialCards={cardRows as Flashcard[]}
+       source={source}
     />
   );
 }
