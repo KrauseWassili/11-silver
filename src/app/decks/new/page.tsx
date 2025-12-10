@@ -21,7 +21,8 @@ export default function NewDeckPage() {
           <h1 className="text-2xl font-medium">Enter title for new deck</h1>
 
           <input
-            id="title"
+            data-testing="input-title"
+            aria-label="Enter new deck name"
             name="title"
             type="text"
             placeholder="New title"
@@ -33,7 +34,12 @@ export default function NewDeckPage() {
           )}
         </div>
 
-        <button type="submit" className="border p-2 bg-gray-100">
+        <button
+          data-testing="create-button"
+          aria-label="Create new deck"
+          type="submit"
+          className="border p-2 bg-gray-100"
+        >
           Create
         </button>
       </form>
