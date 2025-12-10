@@ -14,7 +14,11 @@ type ActionState = {
 };
 
 const deckSchema = z.object({
-  title: z.string().min(2, "Minimum 2 symbols").max(100, "Maximum 100 symbols"),
+  title: z
+    .string()
+    .nonempty("Complete the field")
+    .min(2, "Minimum 2 symbols")
+    .max(100, "Maximum 100 symbols"),
 });
 
 export async function createDeck(
@@ -26,7 +30,16 @@ export async function createDeck(
   });
 
   if (!parsed.success) {
-    return { errors: parsed.error.flatten().fieldErrors };
+    const issues = parsed.error.issues;
+    const fieldErrors: Record<string, string[]> = {};
+
+    for (const err of issues) {
+      const field = err.path[0] as string;
+      if (!fieldErrors[field]) fieldErrors[field] = [];
+      fieldErrors[field].push(err.message);
+    }
+
+    return { errors: fieldErrors };
   }
 
   const { title } = parsed.data;
@@ -44,7 +57,7 @@ export async function createDeck(
       })
       .returning();
 
-    redirect(`/decks/${newDeck.id}/edit`);
+    redirect(`/decks/${newDeck.id}/edit?source=/decks/new`);
   }
-  return {errors:null};
+  return { errors: null };
 }

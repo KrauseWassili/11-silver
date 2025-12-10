@@ -6,7 +6,7 @@ import DecksClient from "../../components/decks-client";
 
 export default async function DecksPage() {
   const session = await getServerSession();
-  const role = session?.user?.role ?? "administrator"; 
+  const role = session?.user?.role ?? "user"; 
   const userId = session?.user?.id;
 
   const admins = await db
