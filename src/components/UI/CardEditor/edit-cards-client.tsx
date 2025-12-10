@@ -7,6 +7,7 @@ import saveCard from "@/app/actions/save-card";
 import deleteCard from "@/app/actions/delete-card";
 import ConfirmDialog from "../../confirm-dialog";
 import { useRouter } from "next/navigation";
+import updateDeckTitle from "@/app/actions/update-deck-title";
 
 export type Flashcard = {
   id: number;
@@ -44,6 +45,20 @@ export default function EditCardsClient({
   });
 
   const [editErrors, setEditErrors] = useState<Record<string, string[]>>({});
+
+  const [isEditingDeckTitle, setIsEditingDeckTitle] = useState(false);
+  const [editingDeckTitle, setEditingDeckTitle] = useState(deckTitle);
+  const [titleState, titleFormAction, isTitlePending] = useActionState(
+    updateDeckTitle,
+    { errors: null }
+  );
+
+  useEffect(() => {
+    if (titleState?.updatedTitle) {
+      setEditingDeckTitle(titleState.updatedTitle);
+      setIsEditingDeckTitle(false);
+    }
+  }, [titleState]);
 
   useEffect(() => {
     if (state && !state.errors && state.id) {
@@ -100,11 +115,60 @@ export default function EditCardsClient({
   const BACK_URL = source || "/decks";
   return (
     <div className="p-24">
-      <h1 className="text-3xl font-bold text-gray-700 mb-10 text-center">
-        {deckTitle}
-      </h1>
+      <div className="mb-5 text-center">
+        <div className="inline-block">
+          <div className="relative flex items-center justify-center min-h-[56px] px-10">
+            {isEditingDeckTitle ? (
+              <form
+                action={titleFormAction}
+                className="flex items-center"
+                style={{ width: "100%" }}
+              >
+                <input type="hidden" name="deckId" value={deckId} />
+                <input
+                  className="border rounded p-2 mr-4 text-2xl text-center min-w-[400px]"
+                  name="title"
+                  value={editingDeckTitle}
+                  onChange={(e) => setEditingDeckTitle(e.target.value)}
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  disabled={isTitlePending}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-2xl"
+                >
+                  ✔
+                </button>
+              </form>
+            ) : (
+              <>
+                <h1 className="text-3xl mr-4 font-bold text-darkest min-w-[400px]">
+                  {editingDeckTitle}
+                </h1>
+                <button
+                  type="button"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-2xl"
+                  onClick={() => setIsEditingDeckTitle(true)}
+                >
+                  ✏️
+                </button>
+              </>
+            )}
+          </div>
+          <div className="mt-1 min-h-[1.25rem]">
+            {titleState?.errors?.title ? (
+              <p className="text-red-500 text-sm">
+                {titleState.errors.title[0]}
+              </p>
+            ) : (
+              <p className="invisible text-sm select-none">placeholder</p>
+            )}
+          </div>
+        </div>
+      </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-10 max-w-4xl mx-auto">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl mx-auto">
+        <div className="p-2 text-right">Total: {cards.length} card{cards.length === 1 ? "" : "s"}</div>
         <table className="w-full text-xl border-collapse">
           <thead>
             <tr className="bg-gray-200 text-left text-lg">
