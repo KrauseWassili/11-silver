@@ -9,14 +9,7 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header
-      className="fixed left-0 top-0 w-full
-        bg-dark
-        text-lightest
-        py-2 
-        text-center
-      "
-    >
+    <header className="fixed left-0 top-0 w-full bg-dark text-lightest py-2">
       <nav>
         <div className="flex items-center justify-between w-full px-4">
           <Link href="/" className="flex items-center">
@@ -36,13 +29,19 @@ export default function Header() {
             >
               Decks
             </Link>
+            <Link
+              href="/profile"
+              className="text-secondary text-xl hover:text-foreground transition-colors font-medium"
+            >
+              Profile
+            </Link>
           </div>
 
           <div className="flex items-center space-x-4">
-            {status === "authenticated" && (
+            {status === "authenticated" && session?.user?.image && (
               <Avatar
-                image={session?.user?.image}
-                name={session?.user?.name}
+                image={session.user.image}
+                name={session.user.name || "avatar"}
                 href="/profile"
               />
             )}
