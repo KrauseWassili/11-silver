@@ -267,7 +267,7 @@ export default function EditCardsClient({
             <button
               type="submit"
               disabled={isPending}
-              className="text-2xl bg-mid rounded-md"
+              className="button-gray-rounded"
             >
               💾
             </button>
@@ -280,7 +280,7 @@ export default function EditCardsClient({
         <button
           type="button"
           onClick={() => router.push(BACK_URL)}
-          className="flex justify-end mt-12 px-10 py-4 text-lightest text-xl font-semibold rounded-lg shadow bg-mid-dark hover:bg-mid"
+          className="button-gray-rounded"
         >
           OK
         </button>
