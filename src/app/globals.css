@@ -18,11 +18,7 @@
   --color-primary-hover: var(--color-dark);
 }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-}
-
+/*
 button {
   background: var(--color-primary);
   color: #fff;
@@ -34,8 +30,20 @@ button {
 
 button:hover {
   background: var(--color-primary-hover);
+} */
+
+.button-gray-rounded {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
+.button-gray-rounded:hover {
+  background: var(--color-primary-hover);
+}
 
 @theme inline {
   --color-darkest: var(--color-darkest);
