@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import DeckCard from "@/components/deck-card";
 import CreateButton from "@/components/create-button";
+import SearchInput from "@/components/search-input";
 
 type Deck = {
   id: number;
@@ -14,28 +15,42 @@ type Deck = {
 interface DecksClientProps {
   decks: Deck[];
   currentUserId: string;
-  adminIds: string[];
+  publicIds: string[];
   role: string;
 }
 
 export default function DecksClient({
   decks,
   currentUserId,
-  adminIds,
+  publicIds,
   role,
 }: DecksClientProps) {
-  const [filter, setFilter] = useState<"mine" | "admin" | "all">("mine");
+  const [filter, setFilter] = useState<
+    "standard" | "public" | "mine" | "favorites"
+  >("standard");
 
-  let filteredDecks: Deck[];
-  if (filter === "mine") {
-    filteredDecks = currentUserId
-      ? decks.filter((d) => d.userId === currentUserId)
-      : [];
-  } else if (filter === "admin") {
-    filteredDecks = decks.filter((d) => adminIds.includes(d.userId));
-  } else {
-    filteredDecks = decks; // "all"
-  }
+  const [search, setSearch] = useState("");
+
+  const filteredDecks = useMemo(() => {
+    let result = decks;
+
+    if (filter === "standard") {
+      result = decks;
+    } else if (filter === "public") {
+      result = decks.filter((d) => publicIds.includes(d.userId));
+    } else if (filter === "mine") {
+      result = decks.filter((d) => d.userId === currentUserId);
+    } else if (filter === "favorites") {
+      result = [];
+    }
+
+    if (search.trim() !== "") {
+      const s = search.toLowerCase();
+      result = result.filter((d) => d.title.toLowerCase().includes(s));
+    }
+
+    return result;
+  }, [filter, search, decks, currentUserId, publicIds]);
 
   return (
     <div className="mb-24 min-h-screen px-4 py-8 mt-12">
@@ -44,7 +59,27 @@ export default function DecksClient({
       </h2>
 
       <div className="max-w-4xl mb-8 m-auto">
+        <SearchInput onSearch={setSearch} />
+
         <div className="mb-4 flex justify-center gap-3">
+          <button
+            onClick={() => setFilter("standard")}
+            className={`shadow-xl w-32 px-4 py-3 rounded ${
+              filter === "standard" ? "bg-gray-800!" : "text-white!"
+            }`}
+          >
+            Standard
+          </button>
+
+          <button
+            onClick={() => setFilter("public")}
+            className={`shadow-xl w-32 px-4 py-3 rounded ${
+              filter === "public" ? "bg-gray-800!" : "text-white!"
+            }`}
+          >
+            Public
+          </button>
+
           <button
             onClick={() => setFilter("mine")}
             className={`shadow-xl w-32 px-4 py-3 rounded ${
@@ -53,24 +88,15 @@ export default function DecksClient({
           >
             My Decks
           </button>
+
           <button
-            onClick={() => setFilter("admin")}
+            onClick={() => setFilter("favorites")}
             className={`shadow-xl w-32 px-4 py-3 rounded ${
-              filter === "admin" ? "bg-gray-800!" : "text-white!"
+              filter === "favorites" ? "bg-gray-800!" : "text-white!"
             }`}
           >
-            Admin Decks
+            Favorites
           </button>
-          {role === "administrator" && (
-            <button
-              onClick={() => setFilter("all")}
-              className={`shadow-xl w-32 px-4 py-3 rounded ${
-                filter === "all" ? "bg-gray-800!" : "text-white!"
-              }`}
-            >
-              All Decks
-            </button>
-          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-3">
