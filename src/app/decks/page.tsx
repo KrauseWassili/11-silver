@@ -6,15 +6,27 @@ import DecksClient from "../../components/decks-client";
 
 export default async function DecksPage() {
   const session = await getServerSession();
-  const role = session?.user?.role ?? "user"; 
-  const userId = session?.user?.id;
+  const role = session?.user?.role ?? "administrator";
+  let userId = session?.user?.id ? String(session.user.id) : null;
 
-  const admins = await db
+  if (!userId && session?.user?.name) {
+    const user = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.name, session.user.name))
+      .limit(1);
+
+    if (user.length > 0) {
+      userId = String(user[0].id);
+    }
+  }
+
+  const publicDecks = await db
     .select({ id: users.id })
     .from(users)
     .where(eq(users.role, "administrator"));
 
-  const adminIds = admins.map((a) => String(a.id));
+  const publicIds = publicDecks.map((p) => String(p.id));
 
   const deckWithCountRaw = await db
     .select({
@@ -38,8 +50,8 @@ export default async function DecksPage() {
   return (
     <DecksClient
       decks={decksData}
-      currentUserId={userId ? String(userId) : "1"}
-      adminIds={adminIds}
+      currentUserId={userId ?? ""}
+      publicIds={publicIds}
       role={role}
     />
   );
