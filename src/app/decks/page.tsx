@@ -6,10 +6,9 @@ import DecksClient from "../../components/decks-client";
 
 export default async function DecksPage() {
   const session = await getServerSession();
-  const role = session?.user?.role ?? "administrator"; 
+  const role = session?.user?.role ?? "administrator";
   let userId = session?.user?.id ? String(session.user.id) : null;
 
-  const admins = await db
   if (!userId && session?.user?.name) {
     const user = await db
       .select({ id: users.id })
@@ -55,7 +54,7 @@ export default async function DecksPage() {
   return (
     <DecksClient
       decks={decksData}
-      currentUserId={userId ??""}
+      currentUserId={userId ?? ""}
       publicIds={publicIds}
       role={role}
     />
