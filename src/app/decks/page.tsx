@@ -33,6 +33,8 @@ export default async function DecksPage() {
       id: decks.id,
       title: decks.title,
       userId: decks.userId,
+      source_type: decks.sourceType,
+      isPublic: decks.isPublic,
       cardCount: count(flashcards.id).as("cardCount"),
     })
     .from(decks)
@@ -45,6 +47,8 @@ export default async function DecksPage() {
     title: d.title,
     userId: String(d.userId),
     cardCount: Number(d.cardCount ?? 0),
+    source_type: d.source_type,
+    isPublic: Boolean(d.isPublic),
   }));
 
   return (

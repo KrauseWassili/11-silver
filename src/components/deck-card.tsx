@@ -53,7 +53,7 @@ export default function DeckCard({
             type="button"
             onClick={() => router.push(`/decks/${deck.id}/edit?source=/decks`)}
             aria-label={`Edit ${deck.name}`}
-            className="p-2 md:p-1 rounded focus:outline-none focus-visible:ring-2"
+            className="button-gray-rounded p-2 md:p-1 rounded focus:outline-none focus-visible:ring-2"
           >
             <PencilIcon className="h-4 w-4 md:h-6 md:w-6 text-blue-500" />
           </button>
@@ -62,7 +62,7 @@ export default function DeckCard({
             type="button"
             aria-label={`Delete ${deck.name}`}
             onClick={() => setOpen(true)}
-            className="p-2 md:p-1 rounded focus:outline-none focus-visible:ring-2"
+            className="button-gray-rounded p-2 md:p-1 rounded focus:outline-none focus-visible:ring-2"
           >
             <TrashIcon className="h-4 w-4 md:h-6 md:w-6 text-red-600" />
           </button>

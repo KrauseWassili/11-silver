@@ -10,6 +10,8 @@ type Deck = {
   title: string;
   userId: string;
   cardCount: number;
+  source_type: "standard" | "user";
+  isPublic: boolean;
 };
 
 interface DecksClientProps {
@@ -32,14 +34,16 @@ export default function DecksClient({
   const [search, setSearch] = useState("");
 
   const filteredDecks = useMemo(() => {
-    let result = decks;
+    let result = [...decks];
 
     if (filter === "standard") {
-      result = decks;
+      result = decks.filter((d) => d.source_type === "standard");
     } else if (filter === "public") {
-      result = decks.filter((d) => publicIds.includes(d.userId));
+      result = decks.filter((d) => d.isPublic === true);
     } else if (filter === "mine") {
-      result = decks.filter((d) => d.userId === currentUserId);
+      result = decks.filter(
+        (d) => d.source_type === "user" && d.userId === currentUserId
+      );
     } else if (filter === "favorites") {
       result = [];
     }
@@ -50,7 +54,7 @@ export default function DecksClient({
     }
 
     return result;
-  }, [filter, search, decks, currentUserId, publicIds]);
+  }, [filter, search, decks, currentUserId]);
 
   return (
     <div className="mb-24 min-h-screen px-4 py-8 mt-12">
@@ -64,8 +68,8 @@ export default function DecksClient({
         <div className="mb-4 flex justify-center gap-3">
           <button
             onClick={() => setFilter("standard")}
-            className={`shadow-xl w-32 px-4 py-3 rounded ${
-              filter === "standard" ? "bg-gray-800!" : "text-white!"
+            className={`shadow-xl w-32 px-4 py-3 button-gray-rounded ${
+              filter === "standard" ? "!bg-[var(--color-dark)]" : "text-white!"
             }`}
           >
             Standard
@@ -73,8 +77,8 @@ export default function DecksClient({
 
           <button
             onClick={() => setFilter("public")}
-            className={`shadow-xl w-32 px-4 py-3 rounded ${
-              filter === "public" ? "bg-gray-800!" : "text-white!"
+            className={`shadow-xl w-32 px-4 py-3 button-gray-rounded ${
+              filter === "public" ? "!bg-[var(--color-dark)]" : "text-white!"
             }`}
           >
             Public
@@ -82,8 +86,8 @@ export default function DecksClient({
 
           <button
             onClick={() => setFilter("mine")}
-            className={`shadow-xl w-32 px-4 py-3 rounded ${
-              filter === "mine" ? "bg-gray-800!" : "text-white!"
+            className={`shadow-xl w-32 px-4 py-3 button-gray-rounded ${
+              filter === "mine" ? "!bg-[var(--color-dark)]" : "text-white!"
             }`}
           >
             My Decks
@@ -91,8 +95,8 @@ export default function DecksClient({
 
           <button
             onClick={() => setFilter("favorites")}
-            className={`shadow-xl w-32 px-4 py-3 rounded ${
-              filter === "favorites" ? "bg-gray-800!" : "text-white!"
+            className={`shadow-xl w-32 px-4 py-3 button-gray-rounded ${
+              filter === "favorites" ? "!bg-[var(--color-dark)]" : "text-white!"
             }`}
           >
             Favorites
@@ -111,7 +115,7 @@ export default function DecksClient({
         </div>
 
         <div className="mt-3 flex justify-end">
-          <div className="shadow-xl rounded-lg">
+          <div className="button-gray-rounded shadow-xl rounded-lg">
             <CreateButton href="/decks/new" label="Create" />
           </div>
         </div>

@@ -9,7 +9,11 @@ interface ConfirmDialogProps {
   onCancel: () => void;
 }
 
-export default function ConfirmDialog({ message, onConfirm, onCancel }: ConfirmDialogProps) {
+export default function ConfirmDialog({
+  message,
+  onConfirm,
+  onCancel,
+}: ConfirmDialogProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,10 +31,16 @@ export default function ConfirmDialog({ message, onConfirm, onCancel }: ConfirmD
         role="dialog"
         aria-modal="true"
       >
-        <p className="text-3xl text-(--color-text-secondary) font-semibold mb-20">{message}</p>
+        <p className="text-3xl text-(--color-text-secondary) font-semibold mb-20">
+          {message}
+        </p>
         <div className="text-3xl flex justify-center space-x-10">
-          <button onClick={onConfirm}>Yes</button>
-          <button onClick={onCancel}>No</button>
+          <button onClick={onConfirm} className="button-gray-rounded">
+            Yes
+          </button>
+          <button onClick={onCancel} className="button-gray-rounded">
+            No
+          </button>
         </div>
       </div>
     </div>,
